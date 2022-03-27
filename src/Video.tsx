@@ -1,16 +1,23 @@
 import {Composition} from 'remotion';
-import {MyComposition} from './Composition';
+import {MorphText} from './MorphText';
 
 export const RemotionVideo: React.FC = () => {
 	return (
 		<>
 			<Composition
-				id="Empty"
-				component={MyComposition}
-				durationInFrames={900}
+				id="MorphText"
+				component={MorphText}
+				durationInFrames={300}
 				fps={30}
-				width={1280}
-				height={720}
+				width={1000}
+				height={450}
+				defaultProps={{
+					texts: ['Hey', 'Johnny', 'Welcome', 'to', 'UBERDUCK'],
+					colors: ['black', 'black', 'black', 'black', 'blue'],
+					backgroundColor: 'white',
+					textSize: 'L',
+					backgroundImage: '',
+				}}
 			/>
 		</>
 	);

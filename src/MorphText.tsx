@@ -2,9 +2,13 @@ import {useEffect, useMemo, useRef} from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import './index.css';
 
-const texts = ['Why', 'is', 'this', 'so', 'satisfying', 'to', 'watch?'];
-
-export const MyComposition = () => {
+export const MorphText: React.FC<{
+	texts: string[];
+	textSize: string;
+	colors: string[];
+	backgroundColor: string;
+	backgroundImage: string;
+}> = ({texts, textSize, colors, backgroundColor, backgroundImage}) => {
 	const text1 = useRef<HTMLElement>(null);
 	const text2 = useRef<HTMLElement>(null);
 
@@ -14,6 +18,21 @@ export const MyComposition = () => {
 	// Controls the speed of morphing.
 	const morphTime = fps;
 	const cooldownTime = fps / 4;
+
+	let size = '150px';
+	if (textSize.toLowerCase() === 'small' || textSize.toLowerCase() === 's') {
+		size = '50px';
+	} else if (
+		textSize.toLowerCase() === 'medium' ||
+		textSize.toLowerCase() === 'm'
+	) {
+		size = '100px';
+	} else if (
+		textSize.toLowerCase() === 'xlarge' ||
+		textSize.toLowerCase() === 'xl'
+	) {
+		size = '200px';
+	}
 
 	const {textIndex, morph, fraction} = useMemo(() => {
 		let cooldown = cooldownTime;
@@ -63,7 +82,10 @@ export const MyComposition = () => {
 		}
 		text1.current.textContent = texts[textIndex % texts.length];
 		text2.current.textContent = texts[(textIndex + 1) % texts.length];
-
+		text1.current.style.color = colors[textIndex % texts.length];
+		text2.current.style.color = colors[(textIndex + 1) % texts.length];
+		text1.current.style.fontSize = size;
+		text2.current.style.fontSize = size;
 		// A lot of the magic happens here, this is what applies the blur filter to the text.
 		function setMorph(fr: number) {
 			if (!text1.current || !text2.current) {
@@ -82,7 +104,10 @@ export const MyComposition = () => {
 			if (text2.current) {
 				text2.current.textContent = texts[(textIndex + 1) % texts.length];
 			}
-			console.log('setting');
+			text1.current.style.color = colors[textIndex % texts.length];
+			text2.current.style.color = colors[(textIndex + 1) % texts.length];
+			text1.current.style.fontSize = size;
+			text2.current.style.fontSize = size;
 		}
 
 		if (morph === 0) {
@@ -98,7 +123,12 @@ export const MyComposition = () => {
 	}, [fraction, morph, textIndex]);
 
 	return (
-		<AbsoluteFill>
+		<AbsoluteFill
+			style={{
+				backgroundColor: backgroundColor,
+				backgroundImage: `url(${backgroundImage})`,
+			}}
+		>
 			<div id="container">
 				<span
 					ref={text1}
