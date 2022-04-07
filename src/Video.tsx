@@ -16,7 +16,8 @@ export const RemotionVideo: React.FC = () => {
 					colors: ['black', 'black', 'black', 'black', 'blue'],
 					backgroundColor: 'white',
 					textSize: 'L',
-					backgroundImage: '',
+					backgroundImage:
+						'https://uberduck-demo.s3.us-west-2.amazonaws.com/marble.jpeg',
 				}}
 			/>
 		</>

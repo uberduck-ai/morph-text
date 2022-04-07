@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useRef} from 'react';
-import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Img, useCurrentFrame, useVideoConfig} from 'remotion';
 import './index.css';
 
 export const MorphText: React.FC<{
@@ -126,9 +126,9 @@ export const MorphText: React.FC<{
 		<AbsoluteFill
 			style={{
 				backgroundColor: backgroundColor,
-				backgroundImage: `url(${backgroundImage})`,
 			}}
 		>
+			<Img src={backgroundImage} />
 			<div id="container">
 				<span
 					ref={text1}
